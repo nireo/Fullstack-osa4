@@ -8,7 +8,7 @@ const totalLikes = (blogs) => {
     let total = blogs.reduce((previous, now) => {
         return previous + now.likes
     }, 0)
-    return total 
+    return total
 }
 
 const favoriteBlog = (blogs) => {
