@@ -1,6 +1,7 @@
 const mongoose = require("mongoose")
 const supertest = require("supertest")
 const app = require("../app")
+const Blog = require("../models/blog")
 
 const api = supertest(app)
 
@@ -24,13 +25,10 @@ test("a valid blog", async () => {
         .send(newBlog)
         .expect(200)
         .expect("Content-type", /application\/json/)
-        
-    const response = await api.get("/api/blogs")
 
-    const contents = response.body.map(r => r.content)
-    expect(contents).toContain(
-        'async/await test'
-    )
+    const blogs = await Blog.find({})
+    const response = await api.get("/api/blogs")
+    expect(response.body.length).toBe(blogs.length)
 })
 
 afterAll(() => {
