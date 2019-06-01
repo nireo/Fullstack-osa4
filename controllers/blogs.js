@@ -6,18 +6,23 @@ blogsRouter.get('/', async (request, response) => {
     response.json(blogs.map(blog => blog.toJSON()))
 })
 
-blogsRouter.post('/', async (request, response) => {
-    if (request.body.likes === undefined) {
-        request.body = Object.assign({}, request.body, {likes: 0})
-    }
-
-    if (request.body.url === undefined || request.body.title === undefined) {
-        return response.status(400).json({error: 'content missing'})
-    }
+blogsRouter.post('/', async (request, response, next) => {
+    try {
+        if (request.body.likes === undefined) {
+            request.body = Object.assign({}, request.body, {likes: 0})
+        }
     
-    const blog = await new Blog(request.body)
-    await blog.save()
-    response.json(blog.toJSON())
+        if (request.body.url === undefined || request.body.title === undefined) {
+            return response.status(400).json({error: 'content missing'})
+        }
+        
+        const blog = await new Blog(request.body)
+        await blog.save()
+        response.json(blog.toJSON())
+    }
+    catch (exception) {
+        next(exception)
+    }
 })
 
 blogsRouter.delete('/:id', async (request, response) => {

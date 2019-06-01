@@ -1,9 +1,8 @@
-const mongoose = require("mongoose")
+const mongoose  = require("mongoose")
 const supertest = require("supertest")
-const app = require("../app")
-const Blog = require("../models/blog")
-
-const api = supertest(app)
+const app       = require("../app")
+const Blog      = require("../models/blog")
+const api       = supertest(app)
 
 // check for response type
 test("blogs are returned as json", async () => {
@@ -57,7 +56,7 @@ test("if there are no likes add likes: 0", async () => {
 
 test("search that there is no _id just id", async () => {
     const response = await api.get("/api/blogs")
-   response.body.map(blog => {
+    response.body.map(blog => {
        expect(blog._id).toBeUndefined()
    })
 

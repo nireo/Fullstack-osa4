@@ -13,7 +13,7 @@ const totalLikes = (blogs) => {
 
 const favoriteBlog = (blogs) => {
     let indexOfBlog = blogs.reduce((previous, now) => {
-        return previous.likes > now.likes ? previous : now
+        return previous.likes > now.likes ? previous: now
     }, 0)
     return indexOfBlog
 }
