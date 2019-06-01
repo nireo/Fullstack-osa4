@@ -35,9 +35,27 @@ test("post a valid blog", async () => {
 })
 
 test("if there are no likes add likes: 0", async () => {
-    const testBlog = {
-        title: "Add likes"
+    const emptyLikeTemplate = {
+        likes: 0
     }
+
+    let testBlog = {
+        title: "Add likes test",
+        author: "me",
+        url: "localhost"
+    }
+    
+    if (testBlog.likes === undefined) {
+        testBlog = await Object.assign({}, testBlog, emptyLikeTemplate)
+    }
+
+    await api
+        .post("/api/blogs")
+        .expect(200)
+        .expect("Content-type", /application\/json/)
+
+    const response = await api.get("/api/blogs")
+    expect(response.body[response.body.length - 1].likes).toBe(0)
 })
 
 afterAll(() => {
