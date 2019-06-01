@@ -47,6 +47,7 @@ test("if there are no likes add likes: 0", async () => {
 
     await api
         .post("/api/blogs")
+        .send(testBlog)
         .expect(200)
         .expect("Content-type", /application\/json/)
 
@@ -59,6 +60,10 @@ test("search that there is no _id just id", async () => {
     for (let i = 0; i < response.body.length; i++) {
         expect(response.body[i]._id).toBeUndefined()
     }
+})
+
+test("send status 400 if no title or author", async () => {
+
 })
 
 afterAll(() => {
