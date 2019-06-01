@@ -7,10 +7,12 @@ blogsRouter.get('/', async (request, response) => {
 })
 
 blogsRouter.post('/', async (request, response, next) => {
-    const defaultLikes = {likes: 0}
-
     if (request.body.likes === undefined) {
-        request.body = Object.assign({}, request.body, defaultLikes)
+        request.body = Object.assign({}, request.body, {likes: 0})
+    }
+
+    if (request.body.url === undefined || request.body.title === undefined) {
+        return response.status(400).json({error: 'content missing'})
     }
     
     const blog = await new Blog(request.body)

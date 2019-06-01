@@ -63,7 +63,16 @@ test("search that there is no _id just id", async () => {
 })
 
 test("send status 400 if no title or author", async () => {
+    const testBlog = {
+        title: "No longer human",
+        author: "Osamu Dazai",
+        likes: 12
+    }
 
+    await api
+        .post("/api/blogs")
+        .send(testBlog)
+        .expect(400)
 })
 
 afterAll(() => {
