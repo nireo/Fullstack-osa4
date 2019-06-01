@@ -54,24 +54,11 @@ test("if there are no likes add likes: 0", async () => {
     expect(response.body[response.body.length - 1].likes).toBeGreaterThan(-1)
 })
 
-test("if _id is renamed to id", async () => {
-    let testBlog = {
-        title: "_id test",
-        author: "me yes",
-        url: "localhost:3001",
-        likes: 0,
-        _id: "awdaijAWIJOTIjawjdawoijOIJW"
-    }
-
-    if (testBlog._id !== undefined) {
-        testBlog.id = testBlog._id
-        delete testBlog._id
-    }
-
+test("search that there is no _id just id", async () => {
     const response = await api.get("/api/blogs")
-
-    expect(response.body[response.body.length -1].id).toBeDefined()
-
+    for (let i = 0; i < response.body.length; i++) {
+        expect(response.body[i]._id).toBeUndefined()
+    }
 })
 
 afterAll(() => {
