@@ -6,7 +6,7 @@ blogsRouter.get('/', async (request, response) => {
     response.json(blogs.map(blog => blog.toJSON()))
 })
 
-blogsRouter.post('/', async (request, response, next) => {
+blogsRouter.post('/', async (request, response) => {
     if (request.body.likes === undefined) {
         request.body = Object.assign({}, request.body, {likes: 0})
     }
@@ -18,6 +18,11 @@ blogsRouter.post('/', async (request, response, next) => {
     const blog = await new Blog(request.body)
     await blog.save()
     response.json(blog.toJSON())
+})
+
+blogsRouter.delete('/:id', async (request, response) => {
+    await Blog.findByIdAndRemove(request.params.id)
+    response.status(204).end()
 })
 
 module.exports = blogsRouter
