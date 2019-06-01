@@ -57,9 +57,10 @@ test("if there are no likes add likes: 0", async () => {
 
 test("search that there is no _id just id", async () => {
     const response = await api.get("/api/blogs")
-    for (let i = 0; i < response.body.length; i++) {
-        expect(response.body[i]._id).toBeUndefined()
-    }
+   response.body.map(blog => {
+       expect(blog._id).toBeUndefined()
+   })
+
 })
 
 test("send status 400 if no title or author", async () => {
