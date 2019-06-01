@@ -27,7 +27,8 @@ test("post a valid blog", async () => {
         .expect("Content-type", /application\/json/)
 
     const response = await api.get("/api/blogs")
-    expect(response.body.length).toBe(7)
+    const blogs = await Blog.find({})
+    expect(response.body.length).toBe(blogs.length)
 })
 
 afterAll(() => {
