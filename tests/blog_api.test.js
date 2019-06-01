@@ -26,9 +26,18 @@ test("post a valid blog", async () => {
         .expect(200)
         .expect("Content-type", /application\/json/)
 
+    // get blogs from /api/blogs
     const response = await api.get("/api/blogs")
+
+    // get blogs from database
     const blogs = await Blog.find({})
     expect(response.body.length).toBe(blogs.length)
+})
+
+test("if there are no likes add likes: 0", async () => {
+    const testBlog = {
+        title: "Add likes"
+    }
 })
 
 afterAll(() => {
