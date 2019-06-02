@@ -7,7 +7,7 @@ usersRouter.post("/", async (request, response, next) => {
         const body = request.body
         
         if (body.password.length <= 3) {
-            response.status(400).end()
+            return response.status(400).end()
         } else {
             const salt = 10
             const passwordHash = await bcrypt.hash(body.password, salt)
