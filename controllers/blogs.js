@@ -36,8 +36,6 @@ blogsRouter.post('/', async (request, response, next) => {
         if (body.url === undefined || body.title === undefined) {
             return response.status(400).json({error: 'content missing'})
         }
-        
-        console.log(user)
 
         const toUpload = new Blog({
             title: body.title,
@@ -51,15 +49,31 @@ blogsRouter.post('/', async (request, response, next) => {
         user.blogs = user.blogs.concat(savedBlog._id)
         await user.save()
         response.json(savedBlog.toJSON())
-    }
-    catch (exception) {
+    } catch (exception) {
         next(exception)
     }
 })
 
-blogsRouter.delete('/:id', async (request, response) => {
-    await Blog.findByIdAndRemove(request.params._id)
-    response.status(204).end()
+blogsRouter.delete('/:id', async (request, response, next) => {
+    const token = getTokenFrom(request)
+    try {
+        const decodedToken = jwt.verify(token, process.env.SECRET)
+        const blog = await Blog.findById(request.params.id)
+        console.log("blog", blog)
+        console.log("decodedToken", decodedToken)
+
+        if (blog.user.toString() === decodedToken.id) {
+            await Blog.findByIdAndRemove(blog.id)
+            response.status(204).end()
+        } else {
+            return response.status(401).json({ 
+                error: 'token missing or invalid'
+             })
+        }
+
+    } catch (exception) {
+        next(exception)
+    }
 })
 
 blogsRouter.put('/:id', async (request, response) => {
