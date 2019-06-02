@@ -3,7 +3,7 @@ const supertest = require("supertest")
 const app       = require("../app")
 const Blog      = require("../models/blog")
 const User      = require("../models/user")
-const helper    = require("../utils/for_testing").usersInDb
+const helper    = require("../utils/for_testing")
 const api       = supertest(app)
 
 // check for response type
