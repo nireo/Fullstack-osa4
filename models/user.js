@@ -7,10 +7,7 @@ const userSchema = mongoose.Schema({
         unique: true
     },
     name: String,
-    passwordHash: {
-        type: String,
-        min: 3
-    },
+    passwordHash: String,
     notes: [
         {
             type: mongoose.Schema.Types.ObjectId,
