@@ -1,0 +1,10 @@
+POST http://localhost:3001/api/blogs
+Content-Type: application/json
+Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6InRlc3RpMiIsImlkIjoiNWNmNDQ1MjA4YWM2YzExMzY4NDA3N2NhIiwiaWF0IjoxNTU5NTEyMzcyfQ.1R9j2sx9fqrKuVLQjbqonr2aQRU6z0hBEVPsEbDfBTY
+
+{
+    "title": "Moby Dick",
+    "author": "Herman Melville",
+    "url": "amazon.com",
+    "likes": 12
+}
